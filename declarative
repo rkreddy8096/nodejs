@@ -33,7 +33,7 @@ pipeline {
             steps {
                 rtNpmInstall (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    goal: "npm install",
+                    goals: "npm install",
                     resolverId: "NPM_RESOLVER"
                 )
             }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 rtNpmPublish (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    goal: "npm start",
+                    goals: "npm start",
                     deployerId: "NPM_DEPLOYER"
                 )
             }
