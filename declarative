@@ -18,19 +18,19 @@ pipeline {
             steps{
                 rtServer (
                     id: "JFROG_ID2",
-                    url: "https://nodejs1.jfrog.io/artifactory",
+                    url: "https://nodejs1.jfrog.io",
                     credentialsId: "nodejs"
                 )
             
                 rtNpmResolver (
-                    id: "JFROG_ID2",
-                    url: "https://nodejs1.jfrog.io/artifactory",
-                    repo: "nodejs-npm-local"
+                    id: "NPM_RESOLVER",
+                    url: "https://nodejs1.jfrog.io",
+                    repo: "nodejs-npm-remote"
                 )
         
                 rtNpmDeployer (
-                    id: "JFROG_ID2",
-                    url: "https://nodejs1.jfrog.io/artifactory",
+                    id: "NPM_DEPLOYER",
+                    url: "https://nodejs1.jfrog.io",
                     repo: "nodejs-npm-local"
                 )
            }
@@ -39,7 +39,7 @@ pipeline {
         stage('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "ARTIFACTORY_SERVER"
+                    serverId: "https://nodejs1.jfrog.io"
                 )
             }
         }
