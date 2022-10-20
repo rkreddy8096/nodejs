@@ -1,0 +1,47 @@
+pipeline {
+    agent {label 'JDK-8'}
+    stages {
+        stage('clone') {
+            steps{
+                git branch: 'main', url: 'https://github.com/nodejs/examples.git'
+            }
+        }
+        stage('build') {
+            steps{
+                sh 'npm install'
+                sh 'npm start'
+            }
+        }
+        stage('Artifactory configuration') {
+            steps{
+                rtServer (
+                    id: "JFROG_ID2",
+                    url: "https://nodejs1.jfrog.io/artifactory",
+                    crediantialsId: "nodejs"
+                )
+            }
+            steps{
+                rtNpmResolver (
+                    id: "JFROG_ID2",
+                    url: "https://nodejs1.jfrog.io/artifactory",
+                    repo: "nodejs-npm-local"
+                )
+            }
+            steps{
+                rtNpmDeployer (
+                    id: "JFROG_ID2",
+                    url: "https://nodejs1.jfrog.io/artifactory",
+                    repo: "nodejs-npm-local"
+                )
+            }
+
+        }
+        stage('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
