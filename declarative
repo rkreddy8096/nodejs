@@ -19,11 +19,12 @@ pipeline {
                     id: "NPM_DEPLOYER",
                     serverId: "JFROG_ID2",
                     remoteRepo: "nodejs-npm-remote"
-                )   localRepo: "nodejs-npm-local"
+                    localRepo: "nodejs-npm-local"
+                    )
            }
         }
         
-       stage ('Exec npm') {
+        stage ('Exec npm') {
             steps {
                 rtNpmInstall (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
@@ -33,11 +34,11 @@ pipeline {
                 )
             }
         }
-        stage('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "JFROG_ID2"
-                )
+        
+         stage('Publish build info') {
+             steps {
+                 rtPublishBuildInfo (
+                      serverId: "JFROG_ID2")
             }
         }
     }
