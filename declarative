@@ -20,45 +20,29 @@ pipeline {
                     url: "https://nodejs1.jfrog.io/",
                     credentialsId: "nodejs"
                 )
-            
-                rtNpmResolver (
-                    id: "NPM_RESOLVER",
-                    serverId: "JFROG_ID2",
-                    repo: "nodejs-npm-remote"
-                )
         
                 rtNpmDeployer (
                     id: "NPM_DEPLOYER",
                     serverId: "JFROG_ID2",
-                    repo: "nodejs-npm-local"
-                )
+                    remoteRepo: "nodejs-npm-remote"
+                )   localRepo: "nodejs-npm-local"
            }
         }
         
-       stage ('Exec npm install') {
+       stage ('Exec npm') {
             steps {
                 rtNpmInstall (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "npm-example",
-                    resolverId: "NPM_RESOLVER"
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    resolverId: "NPM_DEPLOYER"
                 )
             }
         }
-
-        stage ('Exec npm publish') {
-            steps {
-                rtNpmPublish (
-                    tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "npm-example",
-                    deployerId: "NPM_DEPLOYER"
-                )
-            }
-        }
-        
         stage('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "https://nodejs1.jfrog.io"
+                    serverId: "JFROG_ID2"
                 )
             }
         }
