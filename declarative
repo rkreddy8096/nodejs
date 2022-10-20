@@ -6,12 +6,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/nodejs/examples.git'
             }
         }
+        
         stage('build') {
             steps{
                 sh 'npm install'
                 sh 'npm start'
             }
         }
+        
         stage('Artifactoryconfiguration') {
             steps{
                 rtServer (
@@ -19,23 +21,21 @@ pipeline {
                     url: "https://nodejs1.jfrog.io/artifactory",
                     credentialsId: "nodejs"
                 )
-            }
-            steps{
+            
                 rtNpmResolver (
                     id: "JFROG_ID2",
                     url: "https://nodejs1.jfrog.io/artifactory",
                     repo: "nodejs-npm-local"
                 )
-            }
-            steps{
+        
                 rtNpmDeployer (
                     id: "JFROG_ID2",
                     url: "https://nodejs1.jfrog.io/artifactory",
                     repo: "nodejs-npm-local"
                 )
-            }
-
+           }
         }
+    
         stage('Publish build info') {
             steps {
                 rtPublishBuildInfo (
