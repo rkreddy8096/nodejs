@@ -33,7 +33,7 @@ pipeline {
          stage ('Exec npm install') {
             steps {
                 rtNpmInstall (
-                    sh "npm install",
+                    sh 'npm install',
                     resolverId: "NPM_RESOLVER"
                 )
             }
