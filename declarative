@@ -6,14 +6,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/nodejs/examples.git'
             }
         }
-        
-        stage('build') {
-            steps{
-                sh 'npm install'
-                sh 'npm start'
-            }
-        }
-        
+     
         stage('Artifactoryconfiguration') {
             steps{
                 rtServer (
@@ -35,7 +28,26 @@ pipeline {
                 )
            }
         }
-    
+        
+         stage ('Exec npm install') {
+            steps {
+                rtNpmInstall (
+                    tool: NPM_TOOL, // Tool name from Jenkins configuration
+                    path: "/usr/bin/npm",
+                    resolverId: "NPM_RESOLVER"
+                )
+            }
+        }
+
+        stage ('Exec npm publish') {
+            steps {
+                rtNpmPublish (
+                    tool: NPM_TOOL, // Tool name from Jenkins configuration
+                    path: "/usr/bin/npm",
+                    deployerId: "NPM_DEPLOYER"
+                )
+            }
+        }
         stage('Publish build info') {
             steps {
                 rtPublishBuildInfo (
