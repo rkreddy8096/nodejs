@@ -1,6 +1,12 @@
 pipeline {
     agent {label 'JDK-8'}
     stages {
+        stage('checkout'){
+            steps{
+                checkout scm
+            }
+        }
+        
         stage('clone') {
             steps{
                 git branch: 'main', url: 'https://github.com/nodejs/examples.git'
