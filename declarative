@@ -2,13 +2,13 @@ pipeline {
     agent {label 'JDK-8'}
     stages {
         stage('clone') {
-            steps{
+            steps {
                 git branch: 'main', url: 'https://github.com/nodejs/examples.git'
             }
         }
      
         stage('Artifactoryconfiguration') {
-            steps{
+            steps {
                 rtServer (
                     id: "JFROG_ID2",
                     url: "https://nodejs1.jfrog.io/",
@@ -20,8 +20,8 @@ pipeline {
                     serverId: "JFROG_ID2",
                     remoteRepo: "nodejs-npm-remote"
                     localRepo: "nodejs-npm-local"
-                    )
-           }
+                )
+            }
         }
         
         stage ('Exec npm') {
@@ -38,7 +38,8 @@ pipeline {
          stage('Publish build info') {
              steps {
                  rtPublishBuildInfo (
-                      serverId: "JFROG_ID2")
+                      serverId: "JFROG_ID2"
+                      )
             }
         }
     }
