@@ -17,13 +17,13 @@ pipeline {
             
                 rtNpmResolver (
                     id: "NPM_RESOLVER",
-                    serverid: "JFROG_ID2",
+                    serverId: "JFROG_ID2",
                     repo: "nodejs-npm-remote"
                 )
         
                 rtNpmDeployer (
                     id: "NPM_DEPLOYER",
-                    serverid: "JFROG_ID2",
+                    serverId: "JFROG_ID2",
                     repo: "nodejs-npm-local"
                 )
            }
