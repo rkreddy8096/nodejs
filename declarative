@@ -29,7 +29,7 @@ pipeline {
                 rtNpmInstall (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
                     goals: 'clean install',
-                    resolverId: "NPM_DEPLOYER"
+                    deployerId: "NPM_DEPLOYER"
                 )
             }
         }
