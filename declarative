@@ -11,19 +11,19 @@ pipeline {
             steps{
                 rtServer (
                     id: "JFROG_ID2",
-                    url: "https://nodejs1.jfrog.io",
+                    url: "https://nodejs1.jfrog.io/",
                     credentialsId: "nodejs"
                 )
             
                 rtNpmResolver (
                     id: "NPM_RESOLVER",
-                    url: "https://nodejs1.jfrog.io",
+                    serverid: "JFROG_ID2",
                     repo: "nodejs-npm-remote"
                 )
         
                 rtNpmDeployer (
                     id: "NPM_DEPLOYER",
-                    url: "https://nodejs1.jfrog.io",
+                    serverid: "JFROG_ID2",
                     repo: "nodejs-npm-local"
                 )
            }
