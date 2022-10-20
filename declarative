@@ -1,6 +1,5 @@
 pipeline {
     agent {label 'JDK-8'}
-    tools {nodejs "npm"}
     stages {
         stage('clone') {
             steps{
