@@ -1,5 +1,6 @@
 pipeline {
-    agent {label 'JDK-8'}
+    agent any
+    
     stages {
         stage('clone') {
             steps {
@@ -14,31 +15,46 @@ pipeline {
                     url: "https://nodejs1.jfrog.io/",
                     credentialsId: "nodejs"
                 )
+                
+                rtNpmResolver (
+                    id: "NPM_RESOLVER",
+                    serverId: "JFROG_ID2",
+                    repo: "nodejs-npm-remote"
+                )
         
                 rtNpmDeployer (
                     id: "NPM_DEPLOYER",
                     serverId: "JFROG_ID2",
-                    repo: 'nodejs-npm-remote',
                     repo: 'nodejs-npm-local'
                 )
             }
         }
         
-        stage ('Exec npm') {
+        stage ('Exec npm install') {
             steps {
                 rtNpmInstall (
                     tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    goals: 'clean install',
+                    path: "/usr/bin/npm",
+                    resolverId: "NPM_RESOLVER"
+                )
+            }
+        }
+        
+        stage ('Exec npm publish') {
+            steps {
+                rtNpmPublish (
+                    tool: NPM_TOOL, // Tool name from Jenkins configuration
+                    path: "/usr/bin/npm",
                     deployerId: "NPM_DEPLOYER"
                 )
             }
         }
         
-         stage('Publish build info') {
-             steps {
-                 rtPublishBuildInfo (
-                      serverId: "JFROG_ID2"
-                      )
+        stage('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "JFROG_ID2"
+                )
             }
         }
     }
