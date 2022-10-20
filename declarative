@@ -16,7 +16,7 @@ pipeline {
                 )
         
                 rtNpmDeployer (
-                    id: "NPM_DEPLOYER",
+                    Id: "NPM_DEPLOYER",
                     serverId: "JFROG_ID2",
                     repo: "nodejs-npm-remote",
                     repo: "nodejs-npm-local"
