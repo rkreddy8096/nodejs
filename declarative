@@ -30,12 +30,10 @@ pipeline {
             }
         }
         
-        stage ('Exec npm install') {
+        stage ('npm build') {
             steps {
-                rtNpmInstall (
                     sh 'npm install'
-                    sh 'npm start'
-                )                  
+                    sh 'npm start'                
              }
          }
         
