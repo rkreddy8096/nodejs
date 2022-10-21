@@ -33,22 +33,11 @@ pipeline {
         stage ('Exec npm install') {
             steps {
                 rtNpmInstall (
-                    tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "/usr/bin/npm",
-                    resolverId: "NPM_RESOLVER"
-                )
-            }
-        }
-        
-        stage ('Exec npm publish') {
-            steps {
-                rtNpmPublish (
-                    tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "/usr/bin/npm",
-                    deployerId: "NPM_DEPLOYER"
-                )
-            }
-        }
+                    sh 'npm install'
+                    sh 'npm start'
+                )                  
+             }
+         }
         
         stage('Publish build info') {
             steps {
