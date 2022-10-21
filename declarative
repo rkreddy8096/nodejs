@@ -32,10 +32,9 @@ pipeline {
         
         stage ('npm build') {
             steps {
-                    sh 'npm install'
-                    sh 'npm start'                
-             }
-         }
+                npm install
+            }
+        }
         
         stage('Publish build info') {
             steps {
