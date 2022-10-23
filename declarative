@@ -1,6 +1,5 @@
 pipeline {
-    agent any
-    
+    agent { label 'NPM' }
     stages {
         stage('clone') {
             steps {
@@ -8,7 +7,7 @@ pipeline {
             }
         }
      
-        stage('Artifactoryconfiguration') {
+        stage ('Artifactoryconfiguration') {
             steps {
                 rtServer (
                     id: "JFROG_ID2",
@@ -28,34 +27,34 @@ pipeline {
                     repo: 'nodejs-npm-local'
                 )
             }
-        }
+         }
         
-        stage ('Exec npm install') {
-            steps {
-                rtNpmInstall (
-                    tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "/usr/bin/nodejs",
-                    resolverId: "NPM_RESOLVER"
-                )
-            }
-        }
-
-        stage ('Exec npm publish') {
-            steps {
-                rtNpmPublish (
-                    tool: NPM_TOOL, // Tool name from Jenkins configuration
-                    path: "/usr/bin/nodejs",
-                    deployerId: "NPM_DEPLOYER"
-                )
-            }
-        }
+         stage ('Exec npm install') {
+             steps {
+                 rtNpmInstall (
+                     tool: NPM_TOOL, // Tool name from Jenkins configuration
+                     path: "/usr/bin/nodejs",
+                     resolverId: "NPM_RESOLVER"
+                 )
+             }
+         }
+ 
+         stage ('Exec npm publish') {
+             steps {
+                 rtNpmPublish (
+                     tool: NPM_TOOL, // Tool name from Jenkins configuration
+                     path: "/usr/bin/nodejs",
+                     deployerId: "NPM_DEPLOYER"
+                 )
+             }
+         }
         
-        stage('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "JFROG_ID2"
-                )
-            }
-        }
-    }
-}
+         stage('Publish build info') {
+             steps {
+                 rtPublishBuildInfo (
+                     serverId: "JFROG_ID2"
+                 )
+             }
+         }
+     }
+ }
