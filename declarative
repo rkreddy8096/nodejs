@@ -32,7 +32,7 @@ pipeline {
          stage ('Exec npm install') {
              steps {
                  rtNpmInstall (
-                     tool: NPM_TOOL, // Tool name from Jenkins configuration
+                     tool: 'NODEJS', // Tool name from Jenkins configuration
                      path: "/usr/bin/nodejs",
                      resolverId: "NPM_RESOLVER"
                  )
