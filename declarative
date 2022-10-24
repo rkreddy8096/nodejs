@@ -11,8 +11,8 @@ pipeline {
             steps {
                 rtServer (
                     id: "JFROG_ID2",
-                    url: "https://nodejs1.jfrog.io/",
-                    credentialsId: "nodejs"
+                    url: "https://nodejs1.jfrog.io/artifactory/",
+                    credentialsId: "ramakrishna"
                 )
                 
                 rtNpmResolver (
